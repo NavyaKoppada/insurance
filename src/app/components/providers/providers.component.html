@@ -1,0 +1,64 @@
+<div class="main-admin-container">
+    <div class="admin-header">
+        <div class="admin-header-title">
+            <h1 class="heading">Providers Details</h1>
+            <!-- <button class="insert-button" (click)="onInsertClicked()">Add New Provider</button> -->
+            <button class="insert-button" 
+                    title="Add Provider" 
+                    mat-mini-fab color="primary" 
+                    (click)="onInsertClicked()">
+                <mat-icon>add_person</mat-icon>
+            </button>
+        </div>
+    </div>
+    <div class="admin-content">
+        <ag-grid-angular #agGrid style="width: 80%; height: 500px;" class="ag-theme-quartz" [rowData]="rowData"
+            [columnDefs]="colDefs" [rowSelection]="rowSelection" [pagination]="pagination"
+            [paginationPageSize]="paginationPageSize" [paginationPageSizeSelector]="paginationPageSizeSelector"
+            (gridReady)="onGridReady($event)">
+        </ag-grid-angular>
+
+        <!-- New Provider Form -->
+        <section class="container">
+            <div *ngIf="isInserting">
+                <form class="form" (ngSubmit)="onInsertSaved()" #newProviderForm="ngForm">
+                    <div class="form-field">
+                        <label for="providerName">Provider Name</label>
+                        <input type="text" id="providerName" placeholder="Provider Name" name="providerName" required
+                            [(ngModel)]="providerName" #provname="ngModel" #providerNameInput/>
+                    </div>
+
+                    <div class="form-field">
+                        <label for="health">Health</label>
+                        <select id="health" name="health" [ngModel]="providerHealth" required #provhealth="ngModel">
+                            <option>Yes</option>
+                            <option>No</option>
+                        </select>
+                    </div>
+                    <div class="form-field">
+                        <label for="dental">Dental</label>
+                        <select id="dental" name="dental" [ngModel]="providerDental" required #provdental="ngModel">
+                            <option>Yes</option>
+                            <option>No</option>
+                        </select>
+                    </div>
+                    <div class="form-field">
+                        <label for="vision">Vision</label>
+                        <select id="vision" name="vision" [ngModel]="providerVision" required #provvision="ngModel">
+                            <option>Yes</option>
+                            <option>No</option>
+                        </select>
+                    </div>
+                    <div class="form-field">
+                        <label for="life">Life</label>
+                        <select id="life" name="life" [ngModel]="providerLife" required #provlife="ngModel">
+                            <option>Yes</option>
+                            <option>No</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="submit-btn">Submit</button>
+                </form>
+            </div>
+        </section>
+    </div>
+</div>

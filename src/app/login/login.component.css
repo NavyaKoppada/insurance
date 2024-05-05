@@ -1,0 +1,130 @@
+.heading-title-login {
+    font-size: 22px;
+    margin-bottom: 25px;
+    text-align: left;
+    color: #000;
+}
+
+/* Login Element Wrapper */
+.login-lemnt-wrapper {
+    min-height: calc(100vh - 0px);
+    display: flex;
+    flex-direction: column;
+    padding: 50px 0px;
+    justify-content: center;
+}
+
+/* Logo Text Head */
+.logo-txt-head {
+    font-size: 20px;
+    font-weight: 900;
+    margin-left: 10px;
+    vertical-align: middle;
+    color: #080808;
+}
+
+/* Text Label Margin Top */
+.txt-label-mt {
+    font-size: 14px;
+    margin-bottom: 8px;
+    color: #575757;
+    float: left;
+    text-align: left !important;
+}
+
+/* Input Item Fill */
+.input-item-fill {
+    height: 40px;
+    font-size: 14px;
+}
+
+.input-item-fill:focus {
+    outline: none;
+    border-color: #ced4da;
+    box-shadow: none;
+}
+
+/* Button Link Forget */
+.btn-linkfoget:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+/* Check Label Large */
+.checklabel-lg .form-check-label {
+    font-size: 15px;
+    float: left;
+}
+
+.checklabel-lg .form-check-input:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+/* Button Link Forget */
+.btn-linkfoget {
+    font-size: 14px;
+}
+
+/* Button Submit Login */
+.btn.btn-submit-login {
+    font-size: 15px;
+}
+
+/* Account Annotation Text */
+.account-an-txt {
+    font-size: 14px;
+    margin-bottom: 8px;
+    color: #575757;
+    margin-right: 5px;
+}
+
+/* Button Signup */
+.btn-signup {
+    font-size: 14px;
+    color: #6661F0;
+}
+
+.btn-signup:hover {
+    color: #6661F0;
+}
+
+.btn-signup:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+/* Background Body Tertiary */
+.bg-body-tertiary {
+    background-color: none;
+}
+
+/* Button Submit Web */
+.btn-submit-web {
+    background-color: #6661F0 !important;
+    color: #FFFFFF !important;
+    border: none;
+    font-size: 11px;
+    font-weight: 400 !important;
+    width: 118px;
+}
+
+.btn-submit-web:hover {
+    background-color: #6661F0 !important;
+    color: #FFFFFF !important;
+}
+
+/* Button Signup */
+.btn-signup {
+    font-size: 14px !important;
+    color: #6661F0 !important;
+}
+
+/* Jodit React Container */
+.jodit-react-container {
+    width: 1528px;
+    padding-right: 45px;
+    padding-left: 45px;
+    padding-bottom: 30px;
+    display: inline-block;
+}

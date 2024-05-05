@@ -1,0 +1,24 @@
+<div class="side-nav-div">
+  <div *ngFor="let item of navList; let i = index">
+    <div style="position: relative">
+      <mat-icon class="icon" *ngIf="item.display" [routerLink]="item.path" routerLinkActive="active"
+        fontSet="material-icons-outlined" #tooltip="matTooltip" [matTooltip]="item.title" matTooltipPosition="right"
+        (click)="expandNavItems(i)">{{ item.img }}</mat-icon>
+      <mat-icon [matTooltip]="item.title" matTooltipPosition="right" style="position: absolute; top: 20px; left: 0"
+        (click)="expandNavItems(i)" *ngIf="item.navItems && item.display" fontSet="material-icons-outlined">{{ item.show
+        ? "arrow_drop_up" : "arrow_drop_down" }}</mat-icon>
+    </div>
+
+    <div *ngIf="item.lastItem" style="height: 50px"></div>
+    <div class="expansion-div" *ngIf="item.show">
+      <div [@slideDown] class="nav-icon-expansion-div" *ngFor="let subitem of item.navItems">
+        <mat-icon class="icon" *ngIf="subitem.svg" #tooltip="matTooltip" [matTooltip]="subitem.title"
+          matTooltipPosition="right" [routerLink]="subitem.path" routerLinkActive="active"
+          fontSet="material-icons-outlined" svgIcon="profit"></mat-icon>
+        <mat-icon class="sub-item icon" #tooltip="matTooltip" [matTooltip]="subitem.title" matTooltipPosition="right"
+          [routerLink]="subitem.path" routerLinkActive="active" fontSet="material-icons-outlined"
+          *ngIf="subitem.display && subitem?.img">{{ subitem.img }}</mat-icon>
+      </div>
+    </div>
+  </div>
+</div>

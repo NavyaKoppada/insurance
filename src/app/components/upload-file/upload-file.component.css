@@ -1,0 +1,81 @@
+.list-type5 {
+  margin: 0 auto;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 0px;
+  padding-bottom: 20px;
+}
+
+.heading {
+  color: #2a32c4;
+  margin-top: 70px;
+  margin-left: 80px;
+  font-size: 1.8rem;
+  font-family: 'poppins';
+  font-weight: 800;
+}
+
+.heading2 {
+  color: #2a32c4;
+  margin-top: 10px;
+  margin-left: 60px;
+  font-size: 1.8rem;
+  font-family: 'poppins';
+  font-weight: 800;
+}
+
+.fileUpload-button{
+  margin-left: 30px;
+  margin-bottom: 10px;
+}
+
+.header-container,
+.search-container,
+.action-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 0px;
+  margin-left: 30px;
+}
+
+.table {
+  margin-top: 30px;
+  margin-left: 60px;
+}
+
+/* Styles for Toast Message Component */
+.toast-container {
+  position: fixed;
+  top: 130px;
+  right: 20px;
+  z-index: 1000;
+  width: 300px; /* Adjust the width as needed */
+}
+
+.toast-message {
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #2ecc71; /* Success message background color */
+  color: white;
+  font-size: 16px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease-out;
+}
+
+.toast-message.error {
+  background-color: #e74c3c; /* Error message background color */
+}
+
+.ag-theme-quartz {
+  --ag-foreground-color: rgb(42, 50, 196);
+  --ag-background-color: white;
+  --ag-header-foreground-color: rgb(204, 245, 172);
+  --ag-header-background-color: rgb(42, 50, 196);
+  --ag-odd-row-background-color: rgb(0, 0, 0, 0.03);
+  --ag-header-column-resize-handle-color: rgb(42, 50, 196);
+
+  --ag-font-size: 17px;
+  --ag-font-family: 'poppins';
+}

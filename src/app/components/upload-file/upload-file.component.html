@@ -1,0 +1,59 @@
+<div>
+  <h1 class="heading">Upload File</h1>
+</div>
+
+<div class="list-type5">
+  <input
+    type="file"
+    style="display: none"
+    (change)="onFileChange($event)"
+    #fileUpload
+  />
+
+  <div class="header-container">
+    <div class="search-container">
+      <mat-form-field style="margin-top: 10px" appearance="outline">
+        <mat-label>Folder To Upload</mat-label>
+        <mat-select
+          class="upload-line-element"
+          (selectionChange)="folderChanged($event)"
+        >
+          <mat-option
+            [value]="provider"
+            *ngFor="let provider of providers"
+          >
+            {{ provider }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button class="fileUpload-button" mat-mini-fab color="primary" (click)="fileUpload.click()">
+        <mat-icon>upload_file</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <div>
+    <h1 class="heading2">Uploaded File Data</h1>
+  </div>
+
+  <div class="table">
+    <ag-grid-angular
+      class="ag-theme-quartz"
+      style="height: 500px;"
+      [pagination]="pagination"
+      [paginationPageSize]="paginationPageSize"
+      [paginationPageSizeSelector]="paginationPageSizeSelector"
+      [rowData]="rowData"
+      [rowSelection]="rowSelection"
+      [columnDefs]="colDefs"
+      (gridReady)="onGridReady($event)"
+    ></ag-grid-angular>
+  </div>
+
+  <!-- Toast Message Component -->
+  <div class="toast-container">
+    <div class="toast-message" *ngIf="toastMessage" [class.error]="toastType === 'error'">
+      {{ toastMessage }}
+    </div>
+  </div>
+</div>

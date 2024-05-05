@@ -1,0 +1,12 @@
+<!-- <button (click)="onDeleteClicked()">Delete</button> -->
+<!-- <div 
+(click)="onDeleteClicked($event)" 
+class="delete-btn">
+<mat-icon matTooltip="Delete" color="warn">delete_forever</mat-icon>
+</div> -->
+
+<div 
+(click)="onDeleteClick(params.rowIndex)"
+class="delete-btn">
+<mat-icon matTooltip="Delete" color="warn">delete_forever</mat-icon>
+</div>
