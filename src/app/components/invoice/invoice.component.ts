@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ColDef, GridReadyEvent } from 'ag-grid-community';
 import { ISetFilterParams } from 'ag-grid-enterprise';
 import { InvoiceService } from 'src/app/Services/invoice.service';
@@ -10,7 +11,9 @@ import { InvoiceService } from 'src/app/Services/invoice.service';
 })
 export class InvoiceComponent {
 
-  constructor(private invoiceService: InvoiceService) { }
+  constructor(private invoiceService: InvoiceService,
+              private snackbar : MatSnackBar
+  ) { }
 
   ngOnInit() {
     this.fetchData()
@@ -27,13 +30,21 @@ export class InvoiceComponent {
 
   fetchData() {
     this.isLoading = true;
-    // setTimeout(() => {
+    setTimeout(() => {
     this.invoiceService.getAllInvoices().subscribe((invoice: any) => {
       this.rowData = invoice;
       this.headData = Object.keys(invoice[0]);
       this.createColDefs();
+    },(error)=>{
+      console.error('Error fetching invoices:', error);
+      this.snackbar.open('Error fetching invoices: ' + error.message, 'Close', {
+        duration: 5000, // Duration the snackbar will be displayed in milliseconds
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+        panelClass: ['error-snackbar']
     });
-    // }, 4000);
+    });
+    }, 2000);
   }
 
   private createColDefs() {

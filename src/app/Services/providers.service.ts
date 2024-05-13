@@ -1,26 +1,54 @@
 import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { Observable } from "rxjs";
-import { Providers } from "../Model/providers";
+import { HttpClient, HttpErrorResponse } from "@angular/common/http";
+import { Observable, Subject, throwError } from "rxjs";
+import { catchError } from "rxjs/operators";
 
 @Injectable({
     providedIn: 'root',
 })
 export class ProvidersService {
+    private apiUrl = 'http://localhost:8081/providers';
+    private errorSubject = new Subject<string>();
 
     constructor(private http: HttpClient) {}
 
-    providersName: string = '';
-
-    getAllProviders(): Observable<Providers[]> {
-        return this.http.get<Providers[]>('http://localhost:8081/providers');
+    getAllProviders(): Observable<any[]> {
+        return this.http.get<any[]>(this.apiUrl)
+            .pipe(
+                catchError(this.handleError.bind(this))
+            );
     }
 
-    createProvider(providerData: any): Observable<Providers> {
-        return this.http.post<Providers>('http://localhost:8081/providers', providerData);
+    createProvider(formData: any): Observable<any> {
+        return this.http.post<any>(this.apiUrl, formData)
+            .pipe(
+                catchError(this.handleError.bind(this))
+            );
     }
 
-    deleteProviders(providerName:string){
-        return this.http.delete<Providers>('http://localhost:8081/providers/'+`${providerName}`);
+    deleteProviders(providerName: string): Observable<any> {
+        const url = `${this.apiUrl}/${providerName}`;
+        return this.http.delete<any>(url)
+            .pipe(
+                catchError(this.handleError.bind(this))
+            );
+    }
+
+    private handleError(error: HttpErrorResponse) {
+        let errorMessage = 'An error occurred';
+        if (error.error instanceof ErrorEvent) {
+            // Client-side error
+            errorMessage = `Error: ${error.error.message}`;
+        } else {
+            // Server-side error
+            errorMessage = `Error Code: ${error.status}, Message: ${error.message}`;
+        }
+        console.error(errorMessage);
+        this.errorSubject.next(errorMessage);
+        return throwError(()=>errorMessage);
+    }
+
+    getErrorSubject(): Observable<string> {
+        return this.errorSubject.asObservable();
     }
 }
