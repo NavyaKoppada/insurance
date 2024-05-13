@@ -31,7 +31,13 @@ import { AgChartsAngular } from 'ag-charts-angular';
 import { AgGridModule } from 'ag-grid-angular';
 import { CustomDeleteButtonComponent } from './components/providers/custom-delete-button/custom-delete-button.component';
 import { AddProviderComponent } from './components/providers/add-provider/add-provider.component';
-
+import { KeycloakOperationService } from './Services/keycloak.service';
+import { InvoiceComponent } from './components/invoice/invoice.component';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {ThemePalette} from '@angular/material/core';
+import {ProgressSpinnerMode} from '@angular/material/progress-spinner';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +51,8 @@ import { AddProviderComponent } from './components/providers/add-provider/add-pr
     CustomEditButtonComponent,
     CustomDeleteButtonComponent,
     AddProviderComponent,
+    InvoiceComponent,
+    NotFoundComponent,
 
   ],
   imports: [
@@ -68,13 +76,13 @@ import { AddProviderComponent } from './components/providers/add-provider/add-pr
     MatIconModule,
     ReactiveFormsModule,
     AgGridModule,
+    MatProgressBarModule,
+    MatProgressSpinnerModule,
+    
       
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
-    provideRouter(routes),
-    // provideClientHydration(),
-    KeycloakService,
     {
       provide: APP_INITIALIZER,
       useFactory: initializeKeycloak,

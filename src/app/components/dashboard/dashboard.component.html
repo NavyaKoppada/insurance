@@ -1,3 +1,13 @@
-<ng-container *ngIf="chartOptions">
-    <ag-charts-angular style="height: 100%;" [options]="chartOptions"></ag-charts-angular>
-</ng-container>
+
+<div class="main-container">
+    <div *ngIf="isLoading" ngClass="innerdiv" ngClass="loading">
+        <mat-progress-bar mode="buffer"></mat-progress-bar>
+    </div>
+    <div ngClass="innerdiv" *ngIf="!isLoading">
+    <mat-card >
+        <ng-container *ngIf="chartOptions">
+            <ag-charts-angular style="height: 100%; width: 100%;" [options]="chartOptions"></ag-charts-angular>
+        </ng-container>
+    </mat-card>
+</div>
+</div>

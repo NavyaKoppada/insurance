@@ -1,7 +1,6 @@
-import { Component, ElementRef, Input, TemplateRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ProvidersService } from 'src/app/Services/providers.service';
 import { ColDef, GridReadyEvent, ISetFilterParams } from 'ag-grid-community';
-import { NgForm } from '@angular/forms';
 import { CustomEditButtonComponent } from './custom-edit-button/custom-edit-button.component';
 import { CustomDeleteButtonComponent } from './custom-delete-button/custom-delete-button.component';
 
@@ -10,12 +9,9 @@ import { CustomDeleteButtonComponent } from './custom-delete-button/custom-delet
     templateUrl: './providers.component.html',
     styleUrls: ['./providers.component.css']
 })
-export class ProvidersComponent implements AfterViewInit {
+export class ProvidersComponent {
 
     constructor(private providersService: ProvidersService) { }
-
-
-    @ViewChild('deleteButtonTemplate', { static: true }) deleteButtonTemplate: TemplateRef<any>;
 
     headData: string[] = [];
     colDefs: ColDef[] = [];
@@ -25,19 +21,6 @@ export class ProvidersComponent implements AfterViewInit {
     paginationPageSize = 50;
     paginationPageSizeSelector: number[] | boolean = [10, 25, 50, 100];
     isInserting: boolean = false;
-
-
-    providerName: string = '';
-    providerHealth: string = '';
-    providerDental: string = '';
-    providerVision: string = '';
-    providerLife: string = '';
-
-    @ViewChild('newProviderForm') newProviderForm: NgForm;
-
-    ngAfterViewInit() {
-        console.log(this.newProviderForm);
-    }
 
     onGridReady(params: GridReadyEvent) {
         this.setupGrid();
@@ -91,43 +74,25 @@ export class ProvidersComponent implements AfterViewInit {
         this.rowSelection = 'multiple';
     }
 
+
     onInsertClicked() {
         this.isInserting = true;
     }
 
-    onInsertSaved() {
-        this.providerName = this.newProviderForm.value.providerName;
-        this.providerHealth = this.newProviderForm.value.health;
-        this.providerDental = this.newProviderForm.value.dental;
-        this.providerVision = this.newProviderForm.value.vision;
-        this.providerLife = this.newProviderForm.value.life;
-
-        this.providersService.createProvider(this.providerName, this.providerHealth, this.providerDental, this.providerVision, this.providerLife).subscribe((response: any) => {
-            console.log('New Provider Saved:', response);
-
-            // Call setupGrid to refresh data after saving
-            this.setupGrid();
-
-            this.isInserting = false;
-            this.newProviderForm.resetForm(); // Reset the form after successful submission
-        }, (error: any) => {
-            console.error('Error saving new provider:', error);
-            // Optionally handle the error
-        });
-
-        console.log('New Provider Saved:', this.providerName, this.providerHealth, this.providerDental, this.providerVision, this.providerLife);
+    onInsertSaved(formData: any) {
+        this.providersService.createProvider(formData)
+            .subscribe((response: any) => {
+                console.log('New Provider Saved:', response);
+                this.setupGrid();
+                this.isInserting = false; // Close the form after successful submission
+            }, (error: any) => {
+                console.error('Error saving new provider:', error);
+                // Optionally handle the error
+            });
     }
 
     onInsertCancel() {
-        // Reset form and hide it
-        this.providerName = '';
-        this.providerHealth = '';
-        this.providerDental = '';
-        this.providerVision = '';
-        this.providerLife = '';
-
         this.isInserting = false;
-        this.newProviderForm.resetForm(); // Reset the form on cancel
     }
 
     deleteRowAndCallAPI(rowIndex: number) {
@@ -136,14 +101,11 @@ export class ProvidersComponent implements AfterViewInit {
             response => {
                 console.log('Item deleted successfully');
                 this.setupGrid()
-                // Update the UI or handle any other actions after deletion
             },
             error => {
                 console.error('Error deleting item:', error);
                 // Handle the error, if any
             }
         )
-        console.log('Delete button clicked');
-
     }
 }

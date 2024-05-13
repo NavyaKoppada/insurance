@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { KeycloakService } from 'keycloak-angular';
-import { KeycloakOperationService } from 'src/app/Services/keycloak.service';
 
 @Component({
   selector: 'app-top-nav',
@@ -9,40 +8,20 @@ import { KeycloakOperationService } from 'src/app/Services/keycloak.service';
   styleUrls: ['./top-nav.component.css']
 })
 export class TopNavComponent {
-  progressValue: number | undefined;
+
   constructor(
-    // private config: AppConfigService,
-    // private loginService: LoginService,
     private router: Router,
-    private keycloak: KeycloakService
-    // private progressService: ProgressServiceService
+    private keycloakService: KeycloakService
   ) { }
 
   logout(): void {
-    // let authType = this.config.getApiUrls().authType;
-    // if (authType == "keyclock") {
-    //   this.loginService
-    //     .logout(localStorage.getItem("refreshToken") as any)
-    //     .subscribe({
-    //       next: (_) => {
-    //         this.router.navigateByUrl("/login");
-    //       },
-    //       error: (err: Error) => {
-    //         alert(err.message);
-    //       },
-    //     });
-    // }
-    this.keycloak.logout();
-    // localStorage.clear();
-    // sessionStorage.clear();
+    this.keycloakService.logout().then(() => {
+      console.log("hello");
+      // Redirect to login page or any other page after logout
+      this.router.navigate(['/realms/myrealm/account']); // Adjust the route as per your application
+    }).catch(error => {
+      console.error('Logout failed:', error);
+    });
   }
-
-  // updateProgressValue() {
-  //   this.progressValue = this.progressService.getProgressValue();
-  //   return this.progressValue;
-  // }
-
-  // shouldShowProgressBar(): boolean {
-  //   return this.progressService.getShowProgressBar();
-  // }
+  
 }

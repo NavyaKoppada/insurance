@@ -1,0 +1,25 @@
+<div ngClass="main-admin-container">
+
+    <div class="admin-content" *ngIf="isLoading" [ngClass]="{'loading': isLoading}">
+        <mat-spinner color="primary" value="50" mode="indeterminate"></mat-spinner>
+    </div>
+    
+   
+        <div class="admin-content" *ngIf="!isLoading">
+            <h1 ngClass="heading">Invoice Details</h1>
+            <ag-grid-angular class="ag-theme-quartz" 
+                             style="height: 500px;" 
+                             [pagination]="pagination"
+                             [paginationPageSize]="paginationPageSize" 
+                             [paginationPageSizeSelector]="paginationPageSizeSelector"
+                             [rowData]="rowData" 
+                             [rowSelection]="rowSelection" 
+                             [columnDefs]="colDefs"
+                             >
+            </ag-grid-angular>
+        </div>
+
+</div>
+
+
+<!-- (gridReady)="onGridReady($event)" -->

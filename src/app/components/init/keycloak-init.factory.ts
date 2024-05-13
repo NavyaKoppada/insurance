@@ -1,6 +1,7 @@
 import { KeycloakService } from 'keycloak-angular';
 
 export function initializeKeycloak(keycloak: KeycloakService) {
+    console.log('iam here', keycloak.isLoggedIn())
     return () =>
         keycloak.init({
             config: {

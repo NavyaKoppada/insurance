@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 // import { ApiService } from '../services/api.service';
 import { ToastrService } from 'ngx-toastr';
+import { KeycloakOperationService } from '../Services/keycloak.service';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,8 @@ export class LoginComponent {
   constructor(
     private router: Router,
     // private apiService: ApiService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private keycloakService : KeycloakOperationService
   ) {}
 
   handleLogin(): void {
@@ -23,7 +25,8 @@ export class LoginComponent {
       username: this.userName,
       password: this.password
     };
-
+    
+    // this.keycloakService.isLoggedIn();
     // this.apiService.login(payload).subscribe(
     //   (response: any) => {
     //     console.log("signup done", response);

@@ -16,7 +16,7 @@ export class UploadService {
     return this.http.post<any>('http://localhost:8081/upload', formData);
   }
 
-  getAllInvoices() {
+  getAllData() {
     return this.http.get<any>('http://localhost:8081/invoices');
   }
 

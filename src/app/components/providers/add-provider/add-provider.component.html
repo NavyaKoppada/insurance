@@ -1,43 +1,49 @@
+<div class="overlay">
+  <div class="popup">
+    <section class="container">
+      <form class="form" #form="ngForm" (ngSubmit)="onSave(form)">
+        <div class="form-field">
+          <label for="providerName">Provider Name</label>
+          <input type="text" id="providerName" placeholder="Provider Name" name="providerName" required
+            [(ngModel)]="providerName" 
+            #pname = "ngModel"/>
+        </div>
 
-        <!-- New Provider Form -->
-        <section class="container">
-            <div>
-                <form class="form" (ngSubmit)="onSave()" #newProviderForm="ngForm">
-                    <div class="form-field">
-                        <label for="providerName">Provider Name</label>
-                        <input type="text" id="providerName" placeholder="Provider Name" name="providerName" required
-                            [(ngModel)]="providerName" #provname="ngModel" #providerNameInput/>
-                    </div>
+        <div class="form-field">
+          <label for="health">Health</label>
+          <select id="health" name="health" [(ngModel)]="providerHealth" required>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </select>
+        </div>
 
-                    <div class="form-field">
-                        <label for="health">Health</label>
-                        <select id="health" name="health" [ngModel]="providerHealth" required #provhealth="ngModel">
-                            <option>Yes</option>
-                            <option>No</option>
-                        </select>
-                    </div>
-                    <div class="form-field">
-                        <label for="dental">Dental</label>
-                        <select id="dental" name="dental" [ngModel]="providerDental" required #provdental="ngModel">
-                            <option>Yes</option>
-                            <option>No</option>
-                        </select>
-                    </div>
-                    <div class="form-field">
-                        <label for="vision">Vision</label>
-                        <select id="vision" name="vision" [ngModel]="providerVision" required #provvision="ngModel">
-                            <option>Yes</option>
-                            <option>No</option>
-                        </select>
-                    </div>
-                    <div class="form-field">
-                        <label for="life">Life</label>
-                        <select id="life" name="life" [ngModel]="providerLife" required #provlife="ngModel">
-                            <option>Yes</option>
-                            <option>No</option>
-                        </select>
-                    </div>
-                    <button type="submit">Save</button>
-                    <button type="button" (click)="onCancel()">Cancel</button>                </form>
-            </div>
-        </section>
+        <div class="form-field">
+          <label for="dental">Dental</label>
+          <select id="dental" name="dental" [(ngModel)]="providerDental" required>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </select>
+        </div>
+
+        <div class="form-field">
+          <label for="vision">Vision</label>
+          <select id="vision" name="vision" [(ngModel)]="providerVision" required>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </select>
+        </div>
+
+        <div class="form-field">
+          <label for="life">Life</label>
+          <select id="life" name="life" [(ngModel)]="providerLife" required>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </select>
+        </div>
+
+        <button type="submit" [disabled]="form.invalid" [class.disabled]="form.invalid">Save</button>
+        <button type="button" (click)="onCancel()">Cancel</button>
+      </form>
+    </section>
+  </div>
+</div>

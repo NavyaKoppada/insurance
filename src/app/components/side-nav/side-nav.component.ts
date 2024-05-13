@@ -1,9 +1,5 @@
 import { trigger, transition, style, animate } from "@angular/animations";
 import { Component } from "@angular/core";
-import { MatIconRegistry } from "@angular/material/icon";
-import { DomSanitizer } from "@angular/platform-browser";
-import { getAccessStatus } from "../helpers/session-storage-handler";
-import { Roles } from "../constants/Roles";
 
 @Component({
   selector: 'app-side-nav',
@@ -16,12 +12,6 @@ import { Roles } from "../constants/Roles";
   ],
 })
 export class SideNavComponent {
-  constructor(
-    private matIconRegistry: MatIconRegistry,
-    private domSanitizer: DomSanitizer
-  ) {
-    this.matIconRegistry.addSvgIcon("profit", this.domSanitizer.bypassSecurityTrustResourceUrl("../../../../assets/icons/profit.svg"));
-  }
 
   navList: any = [];
 
@@ -31,13 +21,13 @@ export class SideNavComponent {
         title: "Dashboard",
         path: "/dashboard",
         group: false,
-        display: !getAccessStatus(Roles.blockDashboardAccessRole),
+        display: true,
         img: "home",
       },
       {
         title: "Add-Providers",
         path: "addProviders",
-        display: !getAccessStatus(Roles.blockDashboardAccessRole),
+        display: true,
         img: "person_add",
         // display: getAccessStatus(
         //   Roles.loginAccessRole,
@@ -48,14 +38,14 @@ export class SideNavComponent {
         title: "Upload-File",
         path: "/upload-file",
         group: false,
-        display: !getAccessStatus(Roles.blockDashboardAccessRole),
+        display: true,
         img: "upload",
       },
       {
         title: "Providers",
         group: true,
         img: "people",
-        display: !getAccessStatus(Roles.blockDashboardAccessRole),
+        display: true,
         // display: getAccessStatus(
         //   Roles.loginAccessRole,
         //   Roles.fullAccessRole
@@ -83,7 +73,14 @@ export class SideNavComponent {
             // ),
           },
         ]
-      }
+      },
+      {
+        title: "Invoices",
+        path: "/invoices",
+        group: false,
+        display: true,
+        img: "receipt_long",
+      },
     ];
   }
   

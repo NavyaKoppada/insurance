@@ -3,6 +3,7 @@ import { UploadService } from 'src/app/Services/uploadService.service';
 import { ColDef, GridReadyEvent } from 'ag-grid-community';
 import { ToastrService } from 'ngx-toastr';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ProvidersService } from 'src/app/Services/providers.service';
 
 @Component({
   selector: 'app-upload-file',
@@ -10,7 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./upload-file.component.css']
 })
 export class UploadFileComponent implements OnInit {
-  providers = ['UHG', 'UHC', 'Provider3'];
+  providers: string[] = [];
   selectedFolder: string;
   responseData;
 
@@ -27,16 +28,33 @@ export class UploadFileComponent implements OnInit {
   toastType: 'success' | 'error';
 
   constructor(
+    private providersService: ProvidersService,
     private uploadservice: UploadService,
     private toastr: ToastrService,
-    private snackBar: MatSnackBar, // Inject MatSnackBar
+    private snackBar: MatSnackBar,
   ) { }
 
   ngOnInit() {
+    this.fetchProviders(); // Fetch providers on component initialization
     // Initialize the toast message properties
     this.toastMessage = '';
     this.toastType = 'success';
   }
+
+  fetchProviders() {
+    this.providersService.getAllProviders().subscribe(
+      (data) => {
+        // Assuming data is an array of objects and each object has a providerName field
+        this.providers = data.map(item => item.providerName);
+        console.log(data);
+        console.log(this.providers);
+      },
+      (error) => {
+        console.error('Error fetching providers:', error);
+      }
+    );
+  }
+  
 
   folderChanged(event: any) {
     this.selectedFolder = event.value;
@@ -50,22 +68,12 @@ export class UploadFileComponent implements OnInit {
       const fileName = file.name;
       const selectedProvider = this.selectedFolder;
       
-      if (fileName.includes(selectedProvider)) {
-        this.uploadservice.uploadFile(file, this.selectedFolder).subscribe(
-          (response) => {
-            this.responseData = response;
-            console.log('File uploaded successfully:', this.responseData);
-            this.onGridReady({} as GridReadyEvent);
-          },
-          (error) => {
-            console.error('Error uploading file:', error);
-          }
-        );
-      } else {
-        // Display toast message
-        this.toastMessage = `The uploaded file does not match the selected provider (${selectedProvider}).`;
+      // Check if the uploaded file name matches the selected provider
+      if (!fileName.toLowerCase().includes(selectedProvider.toLowerCase())) {
+        // Display toast message for mismatched provider
+        this.toastMessage = `The uploaded file (${fileName}) does not match the selected provider (${selectedProvider}).`;
         this.toastType = 'error';
-
+  
         setTimeout(() => {
           this.toastMessage = '';
         }, 3000);
@@ -77,9 +85,26 @@ export class UploadFileComponent implements OnInit {
           verticalPosition: 'bottom',
           panelClass: ['error-snackbar']
         });
+  
+        return; // Exit method if file name doesn't match selected provider
       }
+      
+      // If file name matches selected provider, proceed with upload
+      this.uploadservice.uploadFile(file, this.selectedFolder).subscribe(
+        (response) => {
+          this.responseData = response;
+          console.log('File uploaded successfully:', this.responseData);
+          
+          // Populate ag-grid table with data
+          this.onGridReady({} as GridReadyEvent);
+        },
+        (error) => {
+          console.error('Error uploading file:', error);
+        }
+      );
     }
   }
+  
   
 
   // ag grid table display code.

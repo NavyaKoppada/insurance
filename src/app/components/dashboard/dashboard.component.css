@@ -1,3 +1,27 @@
 .pie{
     margin-top: 40px;
 }
+.main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: space-around;
+    justify-content: flex-start;
+    height: 100%;
+    padding: 60px 20px 0px 80px;
+  }
+mat-card {
+    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    height: 350px;
+    margin: 10px;
+    padding: 20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  }
+
+  .loading{
+    width: 120px;
+  }

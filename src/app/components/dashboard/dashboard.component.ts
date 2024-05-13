@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { UploadService } from 'src/app/Services/uploadService.service';
 import { AgChartOptions } from 'ag-charts-community';
+import { KeycloakService } from "keycloak-angular";
 
 @Component({
   selector: 'app-dashboard',
@@ -12,15 +13,18 @@ export class DashboardComponent implements OnInit {
   public chartOptions: AgChartOptions;
   uhc_sum = 0;
   uhg_sum = 0;
+  isLoading : boolean = false;
 
-  constructor(private uploadservice: UploadService) { }
+  protected keycloak: KeycloakService
+  constructor(private uploadservice: UploadService,) { }
 
   ngOnInit() {
     this.displayPieChart();
   }
 
   displayPieChart() {
-    this.uploadservice.getAllInvoices().subscribe((data) => {
+    this.isLoading = true;
+    this.uploadservice.getAllData().subscribe((data) => {
       this.displayData = data;
       console.log("called", this.displayData);
 
@@ -42,6 +46,7 @@ export class DashboardComponent implements OnInit {
 
       // Initialize chart after data is loaded
       this.initializeChart();
+      this.isLoading = false;
     }, error => {
       console.error('Error fetching data:', error);
       // Handle error gracefully, e.g., display a message to the user
@@ -51,11 +56,11 @@ export class DashboardComponent implements OnInit {
   initializeChart() {
     console.log('data', this.transformData());
     this.chartOptions = {
-      // data: this.transformData(),
-      data: [
-        { asset: 'UHG', amount: 6000 },
-        { asset: 'UHC', amount: 7000 }
-      ],
+      data: this.transformData(),
+      // data: [
+      //   { asset: 'UHG', amount: 6000 },
+      //   { asset: 'UHC', amount: 7000 }
+      // ],
       title: {
         text: "Providers Charge Amount",
       },
@@ -77,7 +82,6 @@ export class DashboardComponent implements OnInit {
   }
 
   transformData() {
-    console.log("hii")
     return [
       { asset: 'UHG', amount: this.uhg_sum },
       { asset: 'UHC', amount: this.uhc_sum }
