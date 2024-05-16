@@ -1,18 +1,22 @@
 import { Injectable } from "@angular/core";
-import { ActivatedRouteSnapshot, RouterStateSnapshot } from "@angular/router";
+import { ActivatedRouteSnapshot, CanDeactivate, RouterStateSnapshot } from "@angular/router";
 import { Observable } from "rxjs";
+import { AddProviderComponent } from "../components/providers/add-provider/add-provider.component";
 
 
-export interface IDeactivate{
-    canExit:() => boolean | Observable<boolean> | Promise<boolean> 
+export interface IDeactivate {
+    canExit: () => boolean | Observable<boolean> | Promise<boolean>
 }
 
 @Injectable({
-    providedIn:'root',
+    providedIn: 'root',
 })
-export class AuthGuardService {
+export class AuthGuardService implements CanDeactivate<IDeactivate> {
 
     canDeactivate(component: IDeactivate, currentRoute: ActivatedRouteSnapshot, currentState: RouterStateSnapshot, nextState: RouterStateSnapshot) {
-        return component.canExit();
+        // setTimeout(()=> {
+            return component.canExit();
+        // },3000)
+
     }
 }

@@ -12,11 +12,9 @@ import { CustomEditButtonComponent } from './custom-edit-button/custom-edit-butt
     styleUrls: ['./providers.component.css']
 })
 export class ProvidersComponent implements OnDestroy {
-    private errorSubscription: Subscription;
-
     constructor(
         private providersService: ProvidersService,
-        private snackBar: MatSnackBar
+        private snackBar: MatSnackBar // Inject MatSnackBar for displaying error messages
     ) { }
 
     headData: string[] = [];
@@ -28,6 +26,8 @@ export class ProvidersComponent implements OnDestroy {
     paginationPageSizeSelector: number[] | boolean = [10, 25, 50, 100];
     isInserting: boolean = false;
 
+    private errorSubscription: Subscription;
+
     ngOnInit(): void {
         this.errorSubscription = this.providersService.getErrorSubject().subscribe(errorMessage => {
             this.showErrorMessage(errorMessage);
@@ -35,14 +35,13 @@ export class ProvidersComponent implements OnDestroy {
     }
 
     ngOnDestroy(): void {
-        if (this.errorSubscription) {
-            this.errorSubscription.unsubscribe();
-        }
+        this.errorSubscription.unsubscribe();
     }
 
     onGridReady(params: GridReadyEvent) {
         this.setupGrid();
     }
+
     setupGrid() {
         this.providersService.getAllProviders().subscribe((data: any) => {
             this.rowData = data;
@@ -50,13 +49,15 @@ export class ProvidersComponent implements OnDestroy {
                 this.headData = Object.keys(data[0]); // Assuming the first row contains the column headers
                 this.createColDefs();
             }
+        }, error => {
+            console.error('Error fetching providers:', error);
+            this.showErrorMessage('Failed to fetch providers. Please try again.');
         });
     }
 
     createColDefs() {
         this.colDefs = [];
         this.headData.forEach(item => {
-            console.log('item', item)
             let checkbox = item === "providerName";
             let isHealthOrDentalOrVisionOrLife = (item === 'health' || item === 'dental' || item === 'vision' || item === 'life');
             let columnDefinition: ColDef = {
@@ -89,24 +90,6 @@ export class ProvidersComponent implements OnDestroy {
             }
         });
         this.rowSelection = 'multiple';
-    }
-
-
-    onInsertClicked() {
-        this.isInserting = true;
-    }
-
-    onInsertSaved(formData: any) {
-        this.providersService.createProvider(formData)
-            .subscribe((response: any) => {
-                console.log('New Provider Saved:', response);
-                this.setupGrid();
-                this.isInserting = false; // Close the form after successful submission
-            });
-    }
-
-    onInsertCancel() {
-        this.isInserting = false;
     }
 
     deleteRowAndCallAPI(rowIndex: number) {

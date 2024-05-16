@@ -33,13 +33,19 @@ export const routes: Routes = [
         canActivate: [AuthGuard],
         // children: [
         //     {
-        //       path: "add", 
-        //       component: AddProviderComponent,
-        //       canDeactivate: [AuthGuardService], 
+        //         path: "add",
+        //         component: AddProviderComponent,
+        //         canDeactivate: [AuthGuardService],
         //     },
-        //   ]
+        // ]
     },
 
+    {
+        path: "addProviders/add",
+        component: AddProviderComponent,
+        canActivate: [AuthGuard],
+        canDeactivate: [AuthGuardService],
+    },
 
     {
         path: "upload-file",

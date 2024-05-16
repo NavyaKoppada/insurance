@@ -4,6 +4,7 @@ import { ColDef, GridReadyEvent } from 'ag-grid-community';
 import { ToastrService } from 'ngx-toastr';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ProvidersService } from 'src/app/Services/providers.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-upload-file',
@@ -27,6 +28,8 @@ export class UploadFileComponent implements OnInit {
   toastMessage: string;
   toastType: 'success' | 'error';
 
+  private errorSubscription: Subscription;
+
   constructor(
     private providersService: ProvidersService,
     private uploadservice: UploadService,
@@ -39,8 +42,16 @@ export class UploadFileComponent implements OnInit {
     // Initialize the toast message properties
     this.toastMessage = '';
     this.toastType = 'success';
+    this.errorSubscription = this.uploadservice.getErrorSubject().subscribe(errorMessage => {
+      this.showErrorMessage(errorMessage);
+    })
   }
 
+  ngOnDestroy(): void {
+
+    this.errorSubscription.unsubscribe();
+
+  }
   fetchProviders() {
     this.providersService.getAllProviders().subscribe(
       (data) => {
@@ -54,7 +65,7 @@ export class UploadFileComponent implements OnInit {
       }
     );
   }
-  
+
 
   folderChanged(event: any) {
     this.selectedFolder = event.value;
@@ -67,34 +78,27 @@ export class UploadFileComponent implements OnInit {
       const file: File = fileList[0];
       const fileName = file.name;
       const selectedProvider = this.selectedFolder;
-      
+
       // Check if the uploaded file name matches the selected provider
       if (!fileName.toLowerCase().includes(selectedProvider.toLowerCase())) {
         // Display toast message for mismatched provider
         this.toastMessage = `The uploaded file (${fileName}) does not match the selected provider (${selectedProvider}).`;
         this.toastType = 'error';
-  
+
         setTimeout(() => {
           this.toastMessage = '';
         }, 3000);
-  
-        // Show the toast message using MatSnackBar
-        this.snackBar.open(this.toastMessage, 'Close', {
-          duration: 30000,
-          horizontalPosition: 'center',
-          verticalPosition: 'bottom',
-          panelClass: ['error-snackbar']
-        });
-  
+        this.showErrorMessage('incorrect file has been uploaded')
+
         return; // Exit method if file name doesn't match selected provider
       }
-      
+
       // If file name matches selected provider, proceed with upload
       this.uploadservice.uploadFile(file, this.selectedFolder).subscribe(
         (response) => {
           this.responseData = response;
           console.log('File uploaded successfully:', this.responseData);
-          
+
           // Populate ag-grid table with data
           this.onGridReady({} as GridReadyEvent);
         },
@@ -104,8 +108,7 @@ export class UploadFileComponent implements OnInit {
       );
     }
   }
-  
-  
+
 
   // ag grid table display code.
   onGridReady(params: GridReadyEvent) {
@@ -131,5 +134,14 @@ export class UploadFileComponent implements OnInit {
     console.log("headDefs", this.headData);
     console.log("colDefs", this.colDefs);
     console.log("rowData", this.rowData);
+  }
+
+  private showErrorMessage(message: string): void {
+    this.snackBar.open(message, 'Close', {
+      duration: 5000,
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+      panelClass: ['error-snackbar']
+    });
   }
 }

@@ -41,7 +41,7 @@
           </select>
         </div>
 
-        <button type="submit" [disabled]="form.invalid" [class.disabled]="form.invalid">Save</button>
+        <button type="submit" [disabled]="form.invalid || isSubmitted" [class.disabled]="form.invalid">Save</button>
         <button type="button" (click)="onCancel()">Cancel</button>
       </form>
     </section>

@@ -5,8 +5,7 @@
             <button class="insert-button" 
                     title="Add Provider" 
                     mat-mini-fab color="primary" 
-                    
-                    (click)="onInsertClicked()">
+                    routerLink="/addProviders/add">
                 <mat-icon>add_person</mat-icon>
             </button>
         </div>
@@ -26,11 +25,5 @@
             (gridReady)="onGridReady($event)">
         </ag-grid-angular>
 
-        <app-add-provider
-                          *ngIf="isInserting" 
-                          (insertSaved)="onInsertSaved($event)" 
-                          (insertCancel)="onInsertCancel()"
-                          #newProviderForm>
-        </app-add-provider>
     </div>
 </div>
