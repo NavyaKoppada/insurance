@@ -8,7 +8,7 @@ import { LoggingService } from './logging.service';
 })
 export class UploadService {
 
-  private apiUrl = 'http://localhost:8081/';
+  private apiUrl = 'http://localhost:8081/invoices';
   private errorSubject = new Subject<string>();
 
   constructor(private http: HttpClient,
@@ -20,14 +20,14 @@ export class UploadService {
     const formData = new FormData();
     formData.append('file', file);
     formData.append('providerName', providerName)
-    return this.http.post<any>(this.apiUrl+'upload', formData)
+    return this.http.post<any>(this.apiUrl+'/upload', formData)
     .pipe(
       catchError(this.handleError.bind(this,'Failed to upload file. Please try again.'))
     );
   }
 
   getAllData() {
-    return this.http.get<any>(this.apiUrl+'invoices')
+    return this.http.get<any>(this.apiUrl)
     .pipe(
       catchError(this.handleError.bind(this,'Failed to fetch data. Please try again.'))
     );
@@ -36,7 +36,7 @@ export class UploadService {
   getInvoicesByType(providerName: any) {
     const params = new URLSearchParams();
     params.append("providerName", providerName)
-    return this.http.get<any>(this.apiUrl+'invoices')
+    return this.http.get<any>(this.apiUrl)
     .pipe(this.handleError.bind(this,'Failed to fetch invoices. Please try again.'));
   }
 

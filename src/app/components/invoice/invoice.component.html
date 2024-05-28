@@ -1,25 +1,26 @@
-<div ngClass="main-admin-container">
-
-    <div class="admin-content" *ngIf="isLoading" [ngClass]="{'loading': isLoading}">
-        <mat-spinner color="primary" value="50" mode="indeterminate"></mat-spinner>
-    </div>
+<div class="main-admin-container">
+    <app-loader [isLoading]="isLoading" class="admin-content" [ngClass]="{'loading': isLoading}" *ngIf="isLoading"></app-loader>
     
-   
-        <div class="admin-content" *ngIf="!isLoading">
-            <h1 ngClass="heading">Invoice Details</h1>
-            <ag-grid-angular class="ag-theme-quartz" 
-                             style="height: 500px;" 
-                             [pagination]="pagination"
-                             [paginationPageSize]="paginationPageSize" 
-                             [paginationPageSizeSelector]="paginationPageSizeSelector"
-                             [rowData]="rowData" 
-                             [rowSelection]="rowSelection" 
-                             [columnDefs]="colDefs"
-                             >
-            </ag-grid-angular>
+    <div class="admin-content" *ngIf="!isLoading">
+        <div class="column">
+        <h1 class="heading">Invoice Details</h1>
+        
+        <div class="downloadExcel">
+            <button mat-mini-fab color="primary" (click)="exportExcel()">
+                <mat-icon>download_for_offline</mat-icon>
+              </button>
         </div>
-
-</div>
-
-
-<!-- (gridReady)="onGridReady($event)" -->
+    </div>
+        <ag-grid-angular class="ag-theme-quartz" 
+                         style="height: 400px;width: 1000px;" 
+                         [pagination]="pagination"
+                         [paginationPageSize]="paginationPageSize" 
+                         [paginationPageSizeSelector]="paginationPageSizeSelector"
+                         [rowData]="rowData" 
+                         [rowSelection]="rowSelection" 
+                         [columnDefs]="colDefs"
+                         (gridReady)="onGridReady($event)">
+        </ag-grid-angular>
+    </div>
+  </div>
+  

@@ -18,13 +18,12 @@ export class UploadFileComponent implements OnInit {
 
   headData: string[] = [];
   colDefs: ColDef[] = [];
-  rowData: string[] = [];
+  rowData: any[] = [];
   rowSelection: "single" | "multiple" = "multiple";
   pagination: boolean = true;
   paginationPageSize = 50;
   paginationPageSizeSelector: number[] | boolean = [10, 25, 50, 100];
 
-  // Toast Message properties
   toastMessage: string;
   toastType: 'success' | 'error';
 
@@ -38,7 +37,7 @@ export class UploadFileComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.fetchProviders(); // Fetch providers on component initialization
+    this.fetchProviders();
     // Initialize the toast message properties
     this.toastMessage = '';
     this.toastType = 'success';
@@ -113,7 +112,19 @@ export class UploadFileComponent implements OnInit {
   // ag grid table display code.
   onGridReady(params: GridReadyEvent) {
     if (this.responseData) {
-      this.rowData = this.responseData;
+      this.rowData = this.responseData.map((upload)=>({
+        id : upload.id.id,
+        coverageDates : upload.id.coverageDates,
+        plan : upload.id.plan,
+        policy : upload.policy,
+        subscriberName : upload.subscriberName,
+        status : upload.status,
+        volume : upload.volume,
+        chargeAmount : upload.chargeAmount,
+        coverageType : upload.coverageType,
+        benefitGroup1 : upload.benefitGroup1,
+        providerName : upload.providerName
+      }));
       this.headData = Object.keys(this.responseData[0]);
       this.createColDefs();
       console.log('navya', this.rowData);
@@ -126,7 +137,6 @@ export class UploadFileComponent implements OnInit {
       let chechbox = item === "id";
       this.colDefs.push({
         field: item,
-        editable: true,
         checkboxSelection: chechbox,
       })
     });

@@ -1,3 +1,4 @@
-<span *ngIf="value">
-    <i [class]="iconClass"> </i> {{ value }}
-</span>
+<span [ngClass]="{'yes-class': value === 'yes', 'no-class': value === 'no'}">
+    <i [ngClass]="iconClass"></i> {{ value }}
+  </span>
+  

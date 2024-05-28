@@ -23,14 +23,14 @@ export class ProvidersService {
     }
 
     createProvider(formData: any): Observable<any> {
-        return this.http.post<any>('http://localhost:8081/provider', formData)
+        return this.http.post<any>(this.apiUrl, formData)
             .pipe(
                 catchError(this.handleError.bind(this, "Unable to Create New Provider"))
             );
     }
 
     deleteProviders(providerName: string): Observable<any> {
-        const url = `http://localhost:8081/provider/${providerName}`;
+        const url = `${this.apiUrl}/${providerName}`;
         return this.http.delete<any>(url)
             .pipe(
                 catchError(this.handleError.bind(this, "Unable to delete the provider"))

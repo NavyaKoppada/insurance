@@ -8,6 +8,6 @@ import { Injectable } from "@angular/core";
 export class InvoiceService{
     constructor(private http : HttpClient){}
     getAllInvoices(){
-        return this.http.get('http://localhost:8081/invoiceHeaders');
+        return this.http.get('http://localhost:8081/invoices/invoiceHeaders');
     }
 }

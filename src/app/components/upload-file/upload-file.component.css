@@ -69,7 +69,7 @@
 }
 
 .ag-theme-quartz {
-  --ag-foreground-color: rgb(42, 50, 196);
+  /* --ag-foreground-color: rgb(42, 50, 196); */
   --ag-background-color: white;
   --ag-header-foreground-color: rgb(204, 245, 172);
   --ag-header-background-color: rgb(42, 50, 196);

@@ -35,9 +35,15 @@ import { KeycloakOperationService } from './Services/keycloak.service';
 import { InvoiceComponent } from './components/invoice/invoice.component';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {ThemePalette} from '@angular/material/core';
-import {ProgressSpinnerMode} from '@angular/material/progress-spinner';
+import {MatInputModule} from '@angular/material/input';
 import { NotFoundComponent } from './not-found/not-found.component';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { LoaderComponent } from './loader/loader.component';
+
+import { ExcelExportModule } from 'ag-grid-enterprise';
+import { ClientSideRowModelModule } from 'ag-grid-enterprise';
+
+
 
 @NgModule({
   declarations: [
@@ -53,6 +59,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
     AddProviderComponent,
     InvoiceComponent,
     NotFoundComponent,
+    LoaderComponent,
 
   ],
   imports: [
@@ -78,6 +85,9 @@ import { NotFoundComponent } from './not-found/not-found.component';
     AgGridModule,
     MatProgressBarModule,
     MatProgressSpinnerModule,
+    MatInputModule,
+    MatAutocompleteModule,
+
     
       
   ],

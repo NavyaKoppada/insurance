@@ -10,7 +10,7 @@ export class LoggingService {
   constructor(private http: HttpClient) {}
 
   logError(data: { statusCode: number, errorMessage: string, datetime: Date }) {
-    this.http.post('http://localhost:8081/errordata', data)
+    this.http.post('http://localhost:8081/logs/errordata', data)
       .pipe(
         catchError((error: HttpErrorResponse) => {
           console.error('Error posting log data:', error);

@@ -1,15 +1,36 @@
 <div class="main-admin-container">
+   
     <div class="admin-header">
         <div class="admin-header-title">
             <h1 class="heading">Providers Details</h1>
+            <div class="column">
             <button class="insert-button" 
                     title="Add Provider" 
                     mat-mini-fab color="primary" 
                     routerLink="/addProviders/add">
                 <mat-icon>add_person</mat-icon>
             </button>
+            <div class="form-field">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Search ProviderName</mat-label>
+                  <input matInput 
+                  type="text"
+                  [(ngModel)]="searchProvider"
+                  (ngModelChange)="onSearchProvider($event)"
+                  >
+                  <!-- 
+                    [matAutocomplete]="auto"
+                    <mat-autocomplete
+                  #auto="matAutocomplete">
+                  </mat-autocomplete> -->
+                </mat-form-field>
+            </div>
         </div>
-    </div>
+        </div>
+  
+
+    
+</div>
     <!-- routerLink="/addProviders/add" -->
     <div class="admin-content">
         <ag-grid-angular 

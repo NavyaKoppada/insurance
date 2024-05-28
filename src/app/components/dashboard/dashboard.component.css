@@ -9,6 +9,7 @@
     height: 100%;
     padding: 60px 20px 0px 80px;
   }
+  
 mat-card {
     text-align: center;
     display: flex;
@@ -24,4 +25,9 @@ mat-card {
 
   .loading{
     width: 120px;
+  }
+
+  .year-filter{
+    margin-top: 50px;
+    margin-left: 10px;
   }

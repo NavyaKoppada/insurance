@@ -23,7 +23,7 @@ export class CustomEditButtonComponent implements ICellRendererAngularComp {
   }
 
   refresh(params: ICellRendererParams) {
-    return false;
+    return true;
   }
 }
 

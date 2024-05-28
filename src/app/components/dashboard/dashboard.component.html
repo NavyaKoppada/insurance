@@ -1,13 +1,22 @@
-
 <div class="main-container">
-    <div *ngIf="isLoading" ngClass="innerdiv" ngClass="loading">
-        <mat-progress-bar mode="buffer"></mat-progress-bar>
-    </div>
-    <div ngClass="innerdiv" *ngIf="!isLoading">
-    <mat-card >
-        <ng-container *ngIf="chartOptions">
-            <ag-charts-angular style="height: 100%; width: 100%;" [options]="chartOptions"></ag-charts-angular>
-        </ng-container>
+  <div *ngIf="isLoading" ngClass="innerdiv" ngClass="loading">
+    <mat-progress-bar mode="buffer"></mat-progress-bar>
+  </div>
+  <div class="innerdiv" *ngIf="!isLoading">
+    <ng-container >
+    <mat-form-field class="year-filter" appearance="outline">
+      <mat-select [value]="selectedYear" (selectionChange)="onSelectedYearChange($event)">
+        <mat-option *ngFor="let year of years" [value]="year">
+          {{ year }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </ng-container>
+    <mat-card>
+      <ng-container *ngIf="chartOptions">
+        <ag-charts-angular style="height: 100%; width: 100%;" [options]="chartOptions"></ag-charts-angular>
+      </ng-container>
     </mat-card>
-</div>
+    
+  </div>
 </div>

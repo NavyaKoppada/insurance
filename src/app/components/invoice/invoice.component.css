@@ -6,8 +6,10 @@
   
 .admin-content {
     margin-top: 30px;
-    margin-left: 60px;
+    margin-left: 120px;
     margin-right: 150px;
+    height: 400px;
+    width: 1000px; 
   }
 
   .heading {
@@ -17,9 +19,15 @@
     font-weight: 800;
     padding-bottom: 20px;
   }
+
+  .column{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
   
   .ag-theme-quartz {
-    --ag-foreground-color: rgb(42, 50, 196);
+    /* --ag-foreground-color: rgb(42, 50, 196); */
     --ag-background-color: white;
     --ag-header-foreground-color: rgb(204, 245, 172);
     --ag-header-background-color: rgb(42, 50, 196);
